@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="455dp"
         android:text="Alarm abschalten"
+        android:onClick="cancel"
         app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

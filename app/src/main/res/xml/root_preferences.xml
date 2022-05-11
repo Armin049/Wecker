@@ -3,11 +3,12 @@
 
     <PreferenceCategory app:title="Snooze Time"/>
     <EditTextPreference
-        android:defaultValue="Default value"
+        android:defaultValue="5"
         android:key="snooze"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="Snooze Time"
+        android:inputType="number"
         />
 
 </PreferenceScreen>
