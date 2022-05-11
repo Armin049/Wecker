@@ -3,8 +3,10 @@ package com.example.wecker;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
@@ -44,9 +46,12 @@ public class NotificationHelper extends ContextWrapper {
     }
 
     public NotificationCompat.Builder getChannelNot(){
+        Intent intent=new Intent(this,empfaengerActivity.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
         return new NotificationCompat.Builder(getApplicationContext(),CHANNEL_1_ID)
                 .setContentTitle("Wecker")
                 .setContentText("Aufstehen")
-                .setSmallIcon(R.drawable.ic_baseline_access_time_24);
+                .setSmallIcon(R.drawable.ic_baseline_access_time_24)
+                .setContentIntent(pIntent);
     }
 }

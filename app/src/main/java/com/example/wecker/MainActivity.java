@@ -14,8 +14,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void setTimer(View view){
         TimePicker timePicker=findViewById(R.id.timePicker1);
-        System.out.println(timePicker.getHour());
-        System.out.println(timePicker.getMinute());
         int hour=timePicker.getHour();
         int min=timePicker.getMinute();
 
@@ -42,7 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void cancel(View view){
         Toast.makeText(getApplicationContext(),"Weker abgeschaltet",Toast.LENGTH_SHORT).show();
-        cancelAlarm();
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this,Reciever.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1 ,intent,0);
+        alarmManager.cancel(pendingIntent);
     }
 
     public void onTimeSet(TimePicker view,int hourOfDay,int minute){
@@ -50,25 +49,17 @@ public class MainActivity extends AppCompatActivity {
         c.set(Calendar.HOUR_OF_DAY,hourOfDay);
         c.set(Calendar.MINUTE,minute);
         c.set(Calendar.SECOND,0);
-
         startAlert(c);
     }
 
     private void startAlert(Calendar c){
-        if (c.before(Calendar.getInstance())){
-            c.add(Calendar.DATE,1);
-        }
+//        if (c.before(Calendar.getInstance())){
+//            c.add(Calendar.DATE,1);
+//        }
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this,Reciever.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1 ,intent,0);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),pendingIntent);
-    }
-
-    private void cancelAlarm(){
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this,Reciever.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1 ,intent,0);
-        alarmManager.cancel(pendingIntent);
     }
 
     @Override

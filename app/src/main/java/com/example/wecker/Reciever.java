@@ -13,6 +13,10 @@ public class Reciever extends BroadcastReceiver {
         NotificationHelper notificationHelper = new NotificationHelper(context);
         NotificationCompat.Builder nb = notificationHelper.getChannelNot();
         notificationHelper.getManager().notify(1, nb.build());
-        context.startActivity(new Intent(context, MainActivity.class));
+//        context.startActivity(new Intent(context, empfaengerActivity.class));
+        Intent i = new Intent();
+        i.setClassName("com.example.wecker", "com.example.wecker.empfaengerActivity");
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);
     }
 }
