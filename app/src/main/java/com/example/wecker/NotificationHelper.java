@@ -14,6 +14,8 @@ import androidx.core.app.NotificationCompat;
 public class NotificationHelper extends ContextWrapper {
     public static final String CHANNEL_1_ID = "channel1ID";
     public static final String CHANNEL_1_Name = "channel1";
+    public static final String CHANNEL_2_ID = "channel2ID";
+    public static final String CHANNEL_2_Name = "channel2";
     private  NotificationManager mManager;
 
     public NotificationHelper(Context base) {
@@ -36,6 +38,17 @@ public class NotificationHelper extends ContextWrapper {
         channel1.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
 
         getManager().createNotificationChannel(channel1);
+
+        NotificationChannel channel2 = new NotificationChannel(
+                CHANNEL_2_ID,
+                CHANNEL_2_Name,
+                NotificationManager.IMPORTANCE_HIGH
+        );
+        channel1.enableLights(true);
+        channel1.enableVibration(true);
+        channel1.setLightColor(R.color.teal_200);
+        channel1.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        getManager().createNotificationChannel(channel2);
     }
 
     public NotificationManager getManager(){
@@ -47,6 +60,16 @@ public class NotificationHelper extends ContextWrapper {
 
     public NotificationCompat.Builder getChannelNot(){
         Intent intent=new Intent(this,empfaengerActivity.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+        return new NotificationCompat.Builder(getApplicationContext(),CHANNEL_1_ID)
+                .setContentTitle("Wecker")
+                .setContentText("Aufstehen")
+                .setSmallIcon(R.drawable.ic_baseline_access_time_24)
+                .setContentIntent(pIntent);
+    }
+
+    public NotificationCompat.Builder getChannelNotification(){
+        Intent intent=new Intent(this,SnoozeActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
         return new NotificationCompat.Builder(getApplicationContext(),CHANNEL_1_ID)
                 .setContentTitle("Wecker")
