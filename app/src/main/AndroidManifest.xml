@@ -21,6 +21,7 @@
         <activity android:name=".empfaengerActivity"/>
         <activity android:name=".SettingsActivity"/>
         <receiver android:name=".Reciever"/>
+        <receiver android:name=".RecieverSnooze"/>
     </application>
 
 </manifest>
