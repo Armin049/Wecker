@@ -15,14 +15,15 @@ public class Reciever extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         NotificationHelper notificationHelper = new NotificationHelper(context);
         NotificationCompat.Builder nb = notificationHelper.getChannelNot();
-        notificationHelper.getManager().notify(1, nb.build());
-        playAudio(context);
+        notificationHelper.getManager().notify(1, nb.build()); //build a Notification
+        playAudio(context); //starts the music
         Intent i = new Intent();  //to direct to the Alert if the App is open
         i.setClassName("com.example.wecker", "com.example.wecker.empfaengerActivity");
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
     }
 
+    //starts the Music
     public static void playAudio(Context c){
         mediaPlayer = MediaPlayer.create(c,R.raw.sound);
         if(!mediaPlayer.isPlaying())
@@ -32,6 +33,7 @@ public class Reciever extends BroadcastReceiver {
             mediaPlayer.setLooping(true);
         }
     }
+    //stops the music
     public static void stopMusic(){
         isplayingAudio=false;
         mediaPlayer.stop();

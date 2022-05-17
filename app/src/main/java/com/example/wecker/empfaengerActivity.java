@@ -20,7 +20,7 @@ public class empfaengerActivity extends AppCompatActivity {
 
     String snoozeTime;
     NotificationHelper notificationHelper;
-    MainActivity mainActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,12 +28,14 @@ public class empfaengerActivity extends AppCompatActivity {
         notificationHelper = new NotificationHelper(this);
     }
 
+    //if the user clicks on stop the Alert gets stopped and he gets redirected to the mainPage
     public void stop(View view){
         Reciever.stopMusic();
         Intent intent=new Intent(this,MainActivity.class);
         startActivity(intent);
     }
 
+    //if the user clicks on snooze the alert is set again, the time the alerts starts is the current time + the snooze value specified in the settings
     public void snooze(View view){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String snooze = preferences.getString("snooze", "");
@@ -45,6 +47,7 @@ public class empfaengerActivity extends AppCompatActivity {
         Reciever.stopMusic();
     }
 
+    //same function as it is in the mainActivity
     public void setSnoozeTime(int hourOfDay,int minute){
         Calendar c=Calendar.getInstance();
         c.set(Calendar.HOUR_OF_DAY,hourOfDay);
@@ -53,10 +56,11 @@ public class empfaengerActivity extends AppCompatActivity {
         startAlert(c);
     }
 
+    //same function as it is in the mainActivity
     private void startAlert(Calendar c){
         if (c.before(Calendar.getInstance())){
             c.add(Calendar.DATE,1);
-        }
+        } //make sure the time isn't in the Past
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this,Reciever.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1 ,intent,PendingIntent.FLAG_IMMUTABLE);

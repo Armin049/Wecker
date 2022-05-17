@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TimePicker timePicker = findViewById(R.id.timePicker1);
-        timePicker.setIs24HourView(true);
-        PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false);
+        timePicker.setIs24HourView(true);    //setze denn Datetimepicker auf eine 24h sicht anstatt eine Am/PM
+        PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false);    //settings default value
     }
 
     public void setTimer(View view) {
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         onTimeSet(hour, min);
         Toast.makeText(getApplicationContext(), "Wecker gestellt", Toast.LENGTH_SHORT).show();
+        //if the timer gets started a Toast is created and the Values from the TimePicker gets send to the methode onTimeSet
     }
 
     public void cancel(View view) {
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Reciever.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_IMMUTABLE);
         alarmManager.cancel(pendingIntent);
+        //stops the PendingIntent
     }
 
     public void onTimeSet(int hourOfDay, int minute) {
@@ -50,22 +52,25 @@ public class MainActivity extends AppCompatActivity {
         c.set(Calendar.MINUTE, minute);
         c.set(Calendar.SECOND, 0);
         startAlert(c);
+        //converts the Inputs from the TimePicker to a Date and sends it to the function startAlert
     }
 
     private void startAlert(Calendar c) {
         if (c.before(Calendar.getInstance())) {
             c.add(Calendar.DATE, 1);
-        }
+        }//make sure the time isn't in the Past
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, Reciever.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_IMMUTABLE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+        //creates an PendingIntent to send a Notification on time c
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
+        //to create the menu
     }
 
     @Override
@@ -73,11 +78,10 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.einstellungen:
                 Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
+                startActivity(intent);    //settings Button
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

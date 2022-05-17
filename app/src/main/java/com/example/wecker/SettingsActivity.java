@@ -22,6 +22,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
+    //settings to save the snooze Time
     public static class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {

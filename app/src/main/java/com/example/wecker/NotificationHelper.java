@@ -1,6 +1,5 @@
 package com.example.wecker;
 
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,10 +8,10 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Build;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
+//helper class to make sending/receiving Notifications simpler
 public class NotificationHelper extends ContextWrapper {
     public static final String CHANNEL_1_ID = "channel1ID";
     public static final String CHANNEL_1_Name = "channel1";
@@ -40,6 +39,7 @@ public class NotificationHelper extends ContextWrapper {
         channel1.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
 
         getManager().createNotificationChannel(channel1);
+        //channel 1 settings
 
         NotificationChannel channel2 = new NotificationChannel(
                 CHANNEL_2_ID,
@@ -51,6 +51,7 @@ public class NotificationHelper extends ContextWrapper {
         channel2.setLightColor(R.color.teal_200);
         channel2.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
         getManager().createNotificationChannel(channel2);
+        //channel 2 settings
     }
 
     public NotificationManager getManager(){
@@ -58,6 +59,7 @@ public class NotificationHelper extends ContextWrapper {
             mManager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         }
         return mManager;
+        //returns the manager (prevents code duplication)
     }
 
     //The Alert that gets triggered the first time

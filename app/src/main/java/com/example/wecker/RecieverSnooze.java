@@ -28,5 +28,6 @@ public class RecieverSnooze extends BroadcastReceiver {
         i.setClassName("com.example.wecker", "com.example.wecker.MainActivity");
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
+        //this Reciever gets triggert when the user clicks on the snooze Button, a Notification containing the new time gets created
     }
 }
